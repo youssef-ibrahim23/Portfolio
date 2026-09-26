@@ -5,15 +5,25 @@ import 'package:protofolio/core/constants/app_colors.dart';
 
 class IntroMobileView extends StatelessWidget {
   final ScrollController? scrollController;
+  final GlobalKey? projectsKey;
+  final GlobalKey? contactKey;
 
-  const IntroMobileView({super.key, this.scrollController});
+  const IntroMobileView({
+    super.key,
+    this.scrollController,
+    this.projectsKey,
+    this.contactKey,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isSmallMobile = screenWidth < 375;
+    
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 20.w,
-        vertical: 40.h,
+        horizontal: isSmallMobile ? 20.w : 24.w,
+        vertical: isSmallMobile ? 40.h : 50.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -24,10 +34,10 @@ class IntroMobileView extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(
                   left: 5.w,
-                  top: 100.h,
+                  top: isSmallMobile ? 90.h : 110.h,
                 ),
-                width: 150.w,
-                height: 180.h,
+                width: isSmallMobile ? 140.w : 160.w,
+                height: isSmallMobile ? 160.h : 190.h,
                 decoration: BoxDecoration(
                   color: AppColors.primaryAccent.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(500.r),
@@ -36,7 +46,7 @@ class IntroMobileView extends StatelessWidget {
               ClipOval(
                 child: Image.asset(
                   'assets/images/my_photo.png',
-                  width: 180.sp,
+                  width: isSmallMobile ? 160.sp : 190.sp,
                   fit: BoxFit.cover,
                 ).animate()
                     .fadeIn(duration: 700.ms, curve: Curves.easeOut)
@@ -46,15 +56,15 @@ class IntroMobileView extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 30.h),
+          SizedBox(height: isSmallMobile ? 25.h : 35.h),
           Container(
             padding: EdgeInsets.symmetric(
-              horizontal: 16.w,
-              vertical: 8.h,
+              horizontal: isSmallMobile ? 14.w : 18.w,
+              vertical: isSmallMobile ? 8.h : 10.h,
             ),
             decoration: BoxDecoration(
               color: AppColors.primaryAccent.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(20.r),
+              borderRadius: BorderRadius.circular(24.r),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -62,75 +72,75 @@ class IntroMobileView extends StatelessWidget {
                 Icon(
                   Icons.mobile_screen_share,
                   color: AppColors.primaryAccent,
-                  size: 18.sp,
+                  size: isSmallMobile ? 18.sp : 20.sp,
                 ),
-                SizedBox(width: 8.w),
+                SizedBox(width: isSmallMobile ? 8.w : 10.w),
                 Text(
                   'MOBILE DEVELOPER',
                   style: TextStyle(
                     color: AppColors.primaryAccent,
                     fontFamily: 'Manrope',
                     fontWeight: FontWeight.bold,
-                    fontSize: 11.sp,
+                    fontSize: isSmallMobile ? 11.sp : 12.sp,
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: isSmallMobile ? 20.h : 25.h),
           Text(
             'Youssef Ibrahim Mohamed',
             style: TextStyle(
               color: AppColors.primaryText,
               fontFamily: 'Manrope',
               fontWeight: FontWeight.bold,
-              fontSize: 20.sp,
+              fontSize: isSmallMobile ? 22.sp : 24.sp,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 10.h),
+          SizedBox(height: isSmallMobile ? 10.h : 12.h),
           Text(
             'Flutter Developer',
             style: TextStyle(
               color: AppColors.primaryAccent,
               fontFamily: 'Manrope',
               fontWeight: FontWeight.bold,
-              fontSize: 16.sp,
+              fontSize: isSmallMobile ? 18.sp : 20.sp,
             ),
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: isSmallMobile ? 20.h : 25.h),
           Text(
             "Flutter Developer with hands-on experience building cross-platform mobile applications using Flutter, Dart, Firebase, REST APIs, and Clean Architecture.",
             style: TextStyle(
               color: AppColors.secondaryText,
-              fontSize: 13.sp,
+              fontSize: isSmallMobile ? 14.sp : 15.sp,
               fontFamily: 'Manrope',
-              height: 1.5,
+              height: 1.6,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 15.h),
+          SizedBox(height: isSmallMobile ? 16.h : 20.h),
           Text(
             "Experienced in developing scalable mobile solutions, integrating backend services, and collaborating with cross-functional teams including UI/UX, Backend, DevOps, and Business Analysis.",
             style: TextStyle(
               color: AppColors.secondaryText,
-              fontSize: 13.sp,
+              fontSize: isSmallMobile ? 14.sp : 15.sp,
               fontFamily: 'Manrope',
-              height: 1.5,
+              height: 1.6,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 30.h),
+          SizedBox(height: isSmallMobile ? 30.h : 35.h),
           Column(
             children: [
               SizedBox(
                 width: double.infinity,
-                height: 50.h,
+                height: isSmallMobile ? 54.h : 58.h,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (scrollController != null) {
-                      scrollController!.animateTo(
-                        800,
+                    if (projectsKey != null) {
+                      Scrollable.ensureVisible(
+                        projectsKey!.currentContext!,
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeInOut,
                       );
@@ -139,7 +149,7 @@ class IntroMobileView extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryAccent,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
+                      borderRadius: BorderRadius.circular(5.r),
                     ),
                   ),
                   child: Row(
@@ -150,28 +160,29 @@ class IntroMobileView extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Manrope',
-                          fontSize: 15.sp,
+                          fontSize: isSmallMobile ? 16.sp : 17.sp,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(width: 8.w),
+                      SizedBox(width: 10.w),
                       Icon(
                         Icons.arrow_downward_rounded,
                         color: Colors.white,
-                        size: 18.sp,
+                        size: isSmallMobile ? 18.sp : 20.sp,
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 15.h),
+              SizedBox(height: isSmallMobile ? 16.h : 40.h),
               MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: Container(
                   alignment: Alignment.center,
-                  width: double.infinity,
-                  height: 50.h,
+                  width: 180.w,
+                  height: isSmallMobile ? 54.h : 58.h,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
+                    borderRadius: BorderRadius.circular(5.r),
                     color: AppColors.primaryAccent,
                   ),
                   child: MaterialButton(
@@ -184,25 +195,26 @@ class IntroMobileView extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Manrope',
-                            fontSize: 15.sp,
+                            fontSize: isSmallMobile ? 16.sp : 17.sp,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         Icon(
                           Icons.drive_file_move_outline,
                           color: Colors.white,
-                          size: 18.sp,
+                          size: isSmallMobile ? 18.sp : 20.sp,
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 15.h,),
+              SizedBox(height: isSmallMobile ? 16.h : 40.h,),
               GestureDetector(
                 onTap: () {
-                  if (scrollController != null) {
-                    scrollController!.animateTo(
-                      scrollController!.position.maxScrollExtent,
+                  if (contactKey != null) {
+                    Scrollable.ensureVisible(
+                      contactKey!.currentContext!,
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut,
                     );
@@ -217,49 +229,51 @@ class IntroMobileView extends StatelessWidget {
                         color: Colors.black,
                         fontFamily: 'Manrope',
                         fontWeight: FontWeight.bold,
-                        fontSize: 15.sp,
+                        fontSize: isSmallMobile ? 16.sp : 17.sp,
                       ),
                     ),
-                    SizedBox(width: 4.w),
+                    SizedBox(width: 6.w),
                     Icon(
                       Icons.call_made,
                       color: Colors.black,
-                      size: 18.sp,
+                      size: isSmallMobile ? 18.sp : 20.sp,
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          SizedBox(height: 30.h),
+          SizedBox(height: isSmallMobile ? 30.h : 40.h),
           Wrap(
             alignment: WrapAlignment.center,
-            spacing: 8.w,
-            runSpacing: 8.h,
+            spacing: isSmallMobile ? 10.w : 12.w,
+            runSpacing: isSmallMobile ? 10.h : 12.h,
             children: [
-              _buildSkillChip('Flutter'),
-              _buildSkillChip('Dart'),
-              _buildSkillChip('Clean Architecture'),
-              _buildSkillChip('State Management'),
-              _buildSkillChip('Firebase'),
-              _buildSkillChip('REST APIs'),
+              _buildSkillChip('Flutter', context),
+              _buildSkillChip('Dart', context),
+              _buildSkillChip('Clean Architecture', context),
+              _buildSkillChip('State Management', context),
+              _buildSkillChip('Firebase', context),
+              _buildSkillChip('REST APIs', context),
             ],
           ),
-          SizedBox(height: 40.h),
         ],
       ),
     );
   }
 
-  Widget _buildSkillChip(String skill) {
+  Widget _buildSkillChip(String skill, BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isSmallMobile = screenWidth < 375;
+    
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 12.w,
-        vertical: 6.h,
+        horizontal: isSmallMobile ? 14.w : 16.w,
+        vertical: isSmallMobile ? 8.h : 10.h,
       ),
       decoration: BoxDecoration(
         color: AppColors.lightAccentBackground,
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(24.r),
         border: Border.all(
           color: AppColors.primaryAccent.withOpacity(0.2),
         ),
@@ -269,7 +283,7 @@ class IntroMobileView extends StatelessWidget {
         style: TextStyle(
           fontFamily: 'Manrope',
           fontWeight: FontWeight.bold,
-          fontSize: 11.sp,
+          fontSize: isSmallMobile ? 12.sp : 13.sp,
           color: AppColors.primaryText,
         ),
       ),

@@ -3,6 +3,7 @@ import 'dart:html' as web;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protofolio/core/constants/app_colors.dart';
+import 'package:protofolio/features/projects/presentation/UI/widgets/live_mobile_mockup.dart';
 
 class ProjectSection extends StatelessWidget {
   const ProjectSection({
@@ -13,6 +14,8 @@ class ProjectSection extends StatelessWidget {
     required this.features,
     required this.storeUrl,
     required this.rightSide,
+    this.demoUrl,
+    this.demoWidget,
 
     this.publishedText = 'PUBLISHED MOBILE APPLICATION',
     this.storeName = 'Google Play',
@@ -62,6 +65,8 @@ class ProjectSection extends StatelessWidget {
   final List<String> features;
 
   final String storeUrl;
+  final String? demoUrl;
+  final Widget? demoWidget;
 
   final Widget rightSide;
 
@@ -368,12 +373,17 @@ class ProjectSection extends StatelessWidget {
           ),
         ),
 
+        // On desktop, show emulator directly
+        // On mobile, we'll handle this in _buildMobileLayout
         rightSide,
       ],
     );
   }
 
   Widget _buildMobileLayout(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isSmallMobile = screenWidth < 375;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -387,11 +397,11 @@ class ProjectSection extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(left: 10.w),
                     alignment: Alignment.center,
-                    height: 32.h,
-                    width: 62.w,
+                    height: isSmallMobile ? 32.h : 36.h,
+                    width: isSmallMobile ? 100.w : 200.w,
                     decoration: BoxDecoration(
                       color: publishedBackgroundColor,
-                      borderRadius: BorderRadius.circular(2.r),
+                      borderRadius: BorderRadius.circular(6.r),
                     ),
                     child: Text(
                       publishedText,
@@ -399,20 +409,21 @@ class ProjectSection extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Manrope',
-                        fontSize: badgeFontSize.sp,
+                        fontSize: isSmallMobile ? 10.sp : 11.sp,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
 
-                  SizedBox(width: 3.w),
+                  SizedBox(width: 10.w),
 
                   Container(
                     alignment: Alignment.center,
-                    height: 32.h,
-                    width: 32.w,
+                    height: isSmallMobile ? 32.h : 36.h,
+                    padding: EdgeInsets.symmetric(horizontal: 12.w),
                     decoration: BoxDecoration(
                       color: storeBackgroundColor,
-                      borderRadius: BorderRadius.circular(2.r),
+                      borderRadius: BorderRadius.circular(6.r),
                     ),
                     child: Row(
                       mainAxisAlignment:
@@ -421,14 +432,16 @@ class ProjectSection extends StatelessWidget {
                         Icon(
                           storeIcon,
                           color: storeIconColor,
-                          size: 5.sp,
+                          size: isSmallMobile ? 16.sp : 18.sp,
                         ),
+                        SizedBox(width: 6.w),
                         Text(
                           storeName,
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Manrope',
-                            fontSize: badgeFontSize.sp,
+                            fontSize: isSmallMobile ? 10.sp : 11.sp,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
@@ -438,7 +451,7 @@ class ProjectSection extends StatelessWidget {
               ),
 
               SizedBox(
-                height: badgesBottomSpacing.h,
+                height: isSmallMobile ? 24.h : 28.h,
               ),
 
               Padding(
@@ -450,14 +463,14 @@ class ProjectSection extends StatelessWidget {
                   style: TextStyle(
                     color: titleColor,
                     fontFamily: 'Manrope',
-                    fontSize: titleFontSize.sp,
+                    fontSize: isSmallMobile ? 22.sp : 24.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
 
               SizedBox(
-                height: titleSpacing.h,
+                height: isSmallMobile ? 16.h : 18.h,
               ),
 
               Padding(
@@ -468,15 +481,15 @@ class ProjectSection extends StatelessWidget {
                   subtitle,
                   style: TextStyle(
                     color: subtitleColor,
-                    fontSize: subtitleFontSize.sp,
-                    fontWeight: FontWeight.w500,
+                    fontSize: isSmallMobile ? 15.sp : 16.sp,
+                    fontWeight: FontWeight.w600,
                     fontFamily: 'Manrope',
                   ),
                 ),
               ),
 
               SizedBox(
-                height: descriptionSpacing.h,
+                height: isSmallMobile ? 24.h : 28.h,
               ),
 
               Padding(
@@ -486,17 +499,17 @@ class ProjectSection extends StatelessWidget {
                 child: Text(
                   description,
                   style: TextStyle(
-                    height: 2.4.h,
+                    height: 1.6,
                     color: descriptionColor,
-                    fontSize: descriptionFontSize.sp,
-                    fontWeight: FontWeight.w500,
+                    fontSize: isSmallMobile ? 14.sp : 15.sp,
+                    fontWeight: FontWeight.w400,
                     fontFamily: 'Manrope',
                   ),
                 ),
               ),
 
               SizedBox(
-                height: featuresSpacing.h,
+                height: isSmallMobile ? 28.h : 32.h,
               ),
 
               Column(
@@ -506,17 +519,17 @@ class ProjectSection extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(
                         left: contentPadding.w,
-                        bottom: 15.h,
+                        bottom: isSmallMobile ? 16.h : 18.h,
                       ),
                       child: Row(
                         children: [
                           Icon(
                             featureIcon,
                             color: featureIconColor,
-                            size: 5.sp,
+                            size: isSmallMobile ? 20.sp : 22.sp,
                           ),
 
-                          SizedBox(width: 2.w),
+                          SizedBox(width: 10.w),
 
                           Expanded(
                             child: Text(
@@ -524,7 +537,7 @@ class ProjectSection extends StatelessWidget {
                               style: TextStyle(
                                 color: featureColor,
                                 fontFamily: 'Manrope',
-                                fontSize: featureFontSize.sp,
+                                fontSize: isSmallMobile ? 14.sp : 15.sp,
                                 fontWeight: FontWeight.w500
                               ),
                             ),
@@ -536,7 +549,7 @@ class ProjectSection extends StatelessWidget {
               ),
 
               SizedBox(
-                height: buttonSpacing.h,
+                height: isSmallMobile ? 32.h : 36.h,
               ),
 
               Padding(
@@ -546,10 +559,11 @@ class ProjectSection extends StatelessWidget {
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: SizedBox(
-                    width: buttonWidth.w,
-                    height: buttonHeight.h,
+                    width: double.infinity,
+                    height: isSmallMobile ? 56.h : 60.h,
                     child: Material(
                       color: buttonColor,
+                      borderRadius: BorderRadius.circular(12.r),
                       child: InkWell(
                         onTap: () {
                           web.window.open(
@@ -559,20 +573,22 @@ class ProjectSection extends StatelessWidget {
                         },
                         child: Row(
                           mainAxisAlignment:
-                          MainAxisAlignment.spaceAround,
+                          MainAxisAlignment.center,
                           children: [
                             Text(
                               buttonText,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'Manrope',
-                                fontSize: buttonFontSize.sp,
+                                fontSize: isSmallMobile ? 16.sp : 17.sp,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
+                            SizedBox(width: 10.w),
                             Icon(
                               buttonIcon,
                               color: Colors.white,
-                              size: 4.sp,
+                              size: isSmallMobile ? 20.sp : 22.sp,
                             ),
                           ],
                         ),
@@ -585,10 +601,90 @@ class ProjectSection extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 30.h),
+        SizedBox(height: 40.h),
 
-        rightSide,
+        // On mobile, show "Try Live Demo" button instead of emulator
+        // On desktop, show the emulator directly via rightSide
+        // This is mobile layout, so we always show button if demoWidget exists
+        if (demoWidget != null)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: SizedBox(
+              width: double.infinity,
+              height: isSmallMobile ? 56.h : 60.h,
+              child: ElevatedButton.icon(
+                onPressed: () => _showDemoDialog(context),
+                icon: Icon(
+                  Icons.play_circle_outline,
+                  color: Colors.white,
+                  size: isSmallMobile ? 20.sp : 22.sp,
+                ),
+                label: Text(
+                  'Try Live Demo',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Manrope',
+                    fontSize: isSmallMobile ? 16.sp : 17.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: buttonColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                ),
+              ),
+            ),
+          )
+        else
+          rightSide,
       ],
+    );
+  }
+
+  void _showDemoDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => Dialog(
+        insetPadding: EdgeInsets.zero,
+        child: Container(
+          alignment: Alignment.center,
+          width: MediaQuery.sizeOf(context).width,
+          height: MediaQuery.sizeOf(context).height,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                automaticallyImplyLeading: false,
+                title: Text(
+                  'Live Demo',
+                  style: TextStyle(
+                    color: AppColors.primaryText,
+                    fontFamily: 'Manrope',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(8.sp),
+                  child: demoWidget ?? rightSide,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

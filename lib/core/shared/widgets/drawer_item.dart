@@ -6,24 +6,36 @@ class DrawerItem extends StatelessWidget{
 
   final String title;
   final ScrollController? scrollController;
+  final GlobalKey? projectsKey;
+  final GlobalKey? contactKey;
 
-  const DrawerItem({super.key, required this.title, this.scrollController});
+  const DrawerItem({
+    super.key,
+    required this.title,
+    this.scrollController,
+    this.projectsKey,
+    this.contactKey,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isSmallMobile = screenWidth < 375;
+    
     return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: isSmallMobile ? 20.w : 24.w, vertical: isSmallMobile ? 8.h : 12.h),
       title: Text(
         title,
         style: TextStyle(
           color: AppColors.primaryText,
           fontFamily: 'Manrope',
-          fontSize: 15.sp,
-          fontWeight: FontWeight.w500,
+          fontSize: isSmallMobile ? 16.sp : 17.sp,
+          fontWeight: FontWeight.w600,
         ),
       ),
       trailing: Icon(
         Icons.arrow_forward_ios,
-        size: 14.sp,
+        size: isSmallMobile ? 16.sp : 18.sp,
         color: Colors.grey,
       ),
       onTap: () {
@@ -38,18 +50,26 @@ class DrawerItem extends StatelessWidget{
               );
               break;
             case 'projects':
-              scrollController!.animateTo(
-                800,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-              );
+              if (projectsKey != null) {
+                Future.delayed(const Duration(milliseconds: 300), () {
+                  Scrollable.ensureVisible(
+                    projectsKey!.currentContext!,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                });
+              }
               break;
             case 'contact':
-              scrollController!.animateTo(
-                scrollController!.position.maxScrollExtent,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-              );
+              if (contactKey != null) {
+                Future.delayed(const Duration(milliseconds: 300), () {
+                  Scrollable.ensureVisible(
+                    contactKey!.currentContext!,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                });
+              }
               break;
           }
         }

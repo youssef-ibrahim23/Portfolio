@@ -6,12 +6,16 @@ class NavbarItem extends StatefulWidget {
   final String label;
   final bool first;
   final ScrollController? scrollController;
+  final GlobalKey? projectsKey;
+  final GlobalKey? contactKey;
 
   const NavbarItem({
     super.key,
     required this.label,
     this.first = false,
     this.scrollController,
+    this.projectsKey,
+    this.contactKey,
   });
 
   @override
@@ -47,18 +51,22 @@ class _NavbarItemState extends State<NavbarItem> {
                 );
                 break;
               case 'projects':
-                widget.scrollController!.animateTo(
-                  800,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,
-                );
+                if (widget.projectsKey != null) {
+                  Scrollable.ensureVisible(
+                    widget.projectsKey!.currentContext!,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                }
                 break;
               case 'contact':
-                widget.scrollController!.animateTo(
-                  widget.scrollController!.position.maxScrollExtent,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,
-                );
+                if (widget.contactKey != null) {
+                  Scrollable.ensureVisible(
+                    widget.contactKey!.currentContext!,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                }
                 break;
             }
           }

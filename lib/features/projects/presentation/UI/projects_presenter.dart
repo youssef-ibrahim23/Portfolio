@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protofolio/core/constants/app_colors.dart';
 import 'package:protofolio/features/projects/presentation/UI/widgets/live_mobile_mockup.dart';
@@ -6,7 +7,6 @@ import 'package:protofolio/features/projects/presentation/UI/widgets/project_sec
 
 class ProjectsPresenter extends StatefulWidget {
   const ProjectsPresenter({super.key});
-
   @override
   State<ProjectsPresenter> createState() => _ProjectsPresenterState();
 }
@@ -14,31 +14,30 @@ class ProjectsPresenter extends StatefulWidget {
 class _ProjectsPresenterState extends State<ProjectsPresenter> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = width < 1024;
+    final isSmallMobile = width < 375;
     return Column(
       children: [
+        SizedBox(height:20.h,),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
-                'Selected mobile applications I’ve built using Flutter and modern development technologies.',
-                style: TextStyle(
-                  color: AppColors.secondaryText,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'Manrope',
-                ),
-                textAlign: TextAlign.center,
+          padding: EdgeInsets.symmetric(horizontal: isMobile ? 20.w : 25.w),
+          child: Align(
+            alignment: isMobile ? Alignment.center : Alignment.centerLeft,
+            child: Text(
+              'Selected mobile applications I\'ve built using Flutter and modern development technologies.',
+              style: TextStyle(
+                height: 2.h,
+                color: AppColors.secondaryText,
+                fontSize: isMobile ? (isSmallMobile ? 14.sp : 14.sp) : 5.sp,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Manrope',
               ),
+              textAlign: isMobile ? TextAlign.center : TextAlign.start,
             ),
-          ],
           ),
         ),
-
-        SizedBox(height: 60.h),
-
+        SizedBox(height: 90.h),
         ProjectSection(
           title: 'Siraj - سِرَاچ',
           titleSpacing: 25,
@@ -52,16 +51,20 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
             'Full English & Arabic localization',
           ],
           storeUrl: 'https://play.google.com/store/apps/details?id=com.youssef.islamic_app&pcampaignid=web_share',
-          rightSide: Transform.translate(
-            offset: Offset(-10.w, -30.h),
+          demoWidget: Transform.translate(
+            offset: Offset(isMobile ? -1 : -10.w, isMobile ? -10.h : -30.h),
             child: LiveMobileMockup(
               url: 'https://youssef-ibrahim23.github.io/islamic-app/?v=2',
             ),
           ),
-        ),
-
-        SizedBox(height: 240.h),
-
+          rightSide: Transform.translate(
+            offset: Offset(-15 , -5),
+            child: LiveMobileMockup(
+              url: 'https://youssef-ibrahim23.github.io/islamic-app/?v=2',
+            ),
+          ),
+        ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).slideY(begin: 0.05, end: 0, duration: 600.ms, curve: Curves.easeOut),
+        SizedBox(height: isMobile ? 80.h : 240.h),
         Padding(
           padding: EdgeInsets.only(right: 12.w),
           child: ProjectSection(
@@ -73,10 +76,10 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
             publishedText: 'HOSTED MOBILE APPLICATION',
             storeName: 'App Host',
             buttonText: 'Download APK Now',
-            badgesBottomSpacing: 30,
-            titleSpacing: 30,
-            descriptionSpacing: 40,
-            featuresSpacing: 40,
+            badgesBottomSpacing: 40,
+            titleSpacing: 35,
+            descriptionSpacing: 45,
+            featuresSpacing: 45,
             title: 'Map App',
             subtitle: 'Smart Location & Navigation Experience Using Flutter and OpenStreetMap',
             description: 'A smart location and navigation mobile application built using Flutter and OpenStreetMap.',
@@ -87,9 +90,16 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
               'Google Maps integration for external navigation',
             ],
             storeUrl: 'https://appho.st/d/bULXd2lJ',
-            buttonSpacing: 20.h,
+            demoWidget: Transform.translate(
+              offset: Offset(isMobile ? 3 : -2.w, isMobile ? -10.h : -90.h),
+              child: LiveMobileMockup(
+                url: 'https://youssef-ibrahim23.github.io/map_app/?v=3',
+                width: 80,
+                height: 600,
+              ),
+            ),
             rightSide: Transform.translate(
-              offset: Offset(-2.w, -70.h),
+              offset: Offset( -2.w,  -30.h),
               child: LiveMobileMockup(
                 url: 'https://youssef-ibrahim23.github.io/map_app/?v=3',
                 width: 80,
@@ -97,12 +107,10 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
               ),
             ),
           ),
-        ),
-
-        SizedBox(height: 100.h),
-
+        ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).then(delay: 200.ms).slideY(begin: 0.05, end: 0, duration: 600.ms, curve: Curves.easeOut),
+        SizedBox(height: isMobile ? 60.h : 100.h),
         Padding(
-          padding: EdgeInsetsGeometry.only(left: 12.w),
+          padding: EdgeInsets.only(left: 12.w),
           child: ProjectSection(
             titleSpacing: 25,
             buttonSpacing: 20.h,
@@ -123,535 +131,249 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
             ],
             featureIconColor: Colors.green,
             storeUrl: 'https://appho.st/d/hD7swnf6',
-            buttonText: 'Download APK Now ',
+            buttonText: 'Download APK Now',
             buttonColor: Colors.green,
-            rightSide: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Transform.translate(
-                  offset: Offset(10.w, -10.h),
-                  child: Image.asset(
-                    'assets/images/personal_tasks_project.png',
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ],
+            rightSide: Transform.translate(
+              offset: Offset(10.w, -10.h),
+              child: Image.asset(
+                'assets/images/personal_tasks_project.png',
+                fit: BoxFit.contain,
+              ),
             ),
           ),
-        ),
-
-        SizedBox(height: 50.h,),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-              width: 170.w,
-              height: 118.w,
-              padding: EdgeInsets.all(7.sp),
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.05)),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "REAL PROJECT",
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontFamily: 'Manrope',
-                          fontSize: 3.5.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Icon(
-                        Icons.restaurant,
-                        color: AppColors.primaryAccent,
-                        size: 5.sp,
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 10.h,),
-
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Corp Meal',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 7.sp,
-                        fontFamily: 'Manrope',
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 10.h,),
-
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Developed a food ordering application allowing users to create shared\ndelivery rooms and invite multiple participants.',
-                      style: TextStyle(
-                        height: 2.h,
-                        color: Colors.black,
-                        fontFamily: 'Manrope',
-                        fontSize: 3.8.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-
-                  Row(
-                    children: [
-                      Text(
-                        '•',
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontSize: 8.sp,
-                        ),
-                      ),
-                      
-                      Text(
-                        'Room-based ordering',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 3.5.sp,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Manrope'
-                        ),
-                      )
-                    ],
-                  ),
-
-                  Row(
-                    children: [
-                      Text(
-                        '•',
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontSize: 8.sp,
-                        ),
-                      ),
-
-                      Text(
-                        'Multiple participants workflow',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.5.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Manrope'
-                        ),
-                      )
-                    ],
-                  ),
-
-                  Row(
-                    children: [
-                      Text(
-                        '•',
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontSize: 8.sp,
-                        ),
-                      ),
-
-                      Text(
-                        'Real-time group ordering',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.5.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Manrope'
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        '•',
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontSize: 8.sp,
-                        ),
-                      ),
-
-                      Text(
-                        'Restaurant-based meal selection',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.5.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Manrope'
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        '•',
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontSize: 8.sp,
-                        ),
-                      ),
-
-                      Text(
-                        'Automated bill generation & shared delivery request',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.5.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Manrope'
-                        ),
-                      )
-                    ],
-                  ),
-
-                  SizedBox(height: 20.h,),
-
-                  Row(
-                    children: [
-                    Container(
-                      alignment: Alignment.center,
-                      width: 23.w,
-                      height: 30.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryAccent.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(2.r),
-                      ),
-                      child: Text(
-                        'Flutter',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 3.sp,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Manrope',
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(width: 5.w,),
-                    Container(
-                      alignment: Alignment.center,
-                      width: 23.w,
-                      height: 30.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryAccent.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(2.r),
-                      ),
-                      child: Text(
-                        'Dart',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 3.sp,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Manrope',
-                        ),
-                      ),
-                    ),
-                      SizedBox(width: 5.w,),
-                    Container(
-                      alignment: Alignment.center,
-                      width: 23.w,
-                      height: 30.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryAccent.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(2.r),
-                      ),
-                      child: Text(
-                        'REST APIs',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 3.sp,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Manrope',
-                        ),
-                      ),
-                    ),
-                      SizedBox(width: 5.w,),
-                    Container(
-                      alignment: Alignment.center,
-                      width: 23.w,
-                      height: 30.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryAccent.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(2.r),
-                      ),
-                      child: Text(
-                        'Real-Time',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 3.sp,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Manrope',
-                        ),
-                      ),
-                    ),
-                  ],)
+        ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).then(delay: 400.ms).slideY(begin: 0.05, end: 0, duration: 600.ms, curve: Curves.easeOut),
+        SizedBox(height: isMobile ? 40.h : 50.h),
+        if (isMobile)
+          Column(
+            children: [
+              _buildSmallProjectCard(
+                context,
+                'REAL PROJECT',
+                Icons.restaurant,
+                'Corp Meal',
+                'Developed a food ordering application allowing users to create shared delivery rooms and invite multiple participants.',
+                [
+                  'Room-based ordering',
+                  'Multiple participants workflow',
+                  'Real-time group ordering',
+                  'Restaurant-based meal selection',
+                  'Automated bill generation & shared delivery request',
                 ],
-              ),
-            ),
-
-            Container(
-              width: 170.w,
-              height: 118.w,
-              padding: EdgeInsets.all(7.sp),
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.05)),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "FREELANCE",
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontFamily: 'Manrope',
-                          fontSize: 3.5.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Icon(
-                        Icons.spatial_tracking,
-                        color: AppColors.primaryAccent,
-                        size: 5.sp,
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 5.h,),
-
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Opportunity Guidance',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 7.sp,
-                        fontFamily: 'Manrope',
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 20.h,),
-
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'A smart cross-platform mobile application for professional growth tracking.',
-                      style: TextStyle(
-                        height: 2.h,
-                        color: Colors.black,
-                        fontFamily: 'Manrope',
-                        fontSize: 3.8.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 10.h,),
-                  Row(
-                    children: [
-                      Text(
-                        '•',
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontSize: 8.sp,
-                        ),
-                      ),
-
-                      Text(
-                        'Responsive Flutter interface',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.5.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Manrope'
-                        ),
-                      )
-                    ],
-                  ),
-
-                  Row(
-                    children: [
-                      Text(
-                        '•',
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontSize: 8.sp,
-                        ),
-                      ),
-
-                      Text(
-                        'Firebase Authentication & Firestore',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.5.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Manrope'
-                        ),
-                      )
-                    ],
-                  ),
-
-                  Row(
-                    children: [
-                      Text(
-                        '•',
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontSize: 8.sp,
-                        ),
-                      ),
-
-                      Text(
-                        'Personalized profiles & opportunity data',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.5.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Manrope'
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        '•',
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontSize: 8.sp,
-                        ),
-                      ),
-
-                      Text(
-                        'Real-time progress tracking',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.5.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Manrope'
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        '•',
-                        style: TextStyle(
-                          color: AppColors.primaryAccent,
-                          fontSize: 8.sp,
-                        ),
-                      ),
-
-                      Text(
-                        'Smart recommendations & user navigation',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.5.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Manrope'
-                        ),
-                      )
-                    ],
-                  ),
-
-                  SizedBox(height: 20.h,),
-
-                  Row(
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        width: 23.w,
-                        height: 30.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryAccent.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(2.r),
-                        ),
-                        child: Text(
-                          'Flutter',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.sp,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Manrope',
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(width: 5.w,),
-                      Container(
-                        alignment: Alignment.center,
-                        width: 23.w,
-                        height: 30.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryAccent.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(2.r),
-                        ),
-                        child: Text(
-                          'Dart',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.sp,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Manrope',
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 5.w,),
-                      Container(
-                        alignment: Alignment.center,
-                        width: 23.w,
-                        height: 30.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryAccent.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(2.r),
-                        ),
-                        child: Text(
-                          'Firebase',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.sp,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Manrope',
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 5.w,),
-                      Container(
-                        alignment: Alignment.center,
-                        width: 23.w,
-                        height: 30.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryAccent.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(2.r),
-                        ),
-                        child: Text(
-                          'Firestore',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 3.sp,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Manrope',
-                          ),
-                        ),
-                      ),
-                    ],)
+                ['Flutter', 'Dart', 'REST APIs', 'Real-Time'],
+              ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).then(delay: 600.ms).slideY(begin: 0.05, end: 0, duration: 600.ms, curve: Curves.easeOut),
+              SizedBox(height: 30.h),
+              _buildSmallProjectCard(
+                context,
+                'FREELANCE',
+                Icons.spatial_tracking,
+                'Opportunity Guidance',
+                'A smart cross-platform mobile application for professional growth tracking.',
+                [
+                  'Responsive Flutter interface',
+                  'Firebase Authentication & Firestore',
+                  'Personalized profiles & opportunity data',
+                  'Real-time progress tracking',
+                  'Smart recommendations & user navigation',
                 ],
-              ),
-            ),
-          ],
-        ),
-
-        SizedBox(height: 100.h),
+                ['Flutter', 'Dart', 'Firebase', 'Firestore'],
+              ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).then(delay: 800.ms).slideY(begin: 0.05, end: 0, duration: 600.ms, curve: Curves.easeOut),
+            ],
+          )
+        else
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSmallProjectCard(
+                context,
+                'REAL PROJECT',
+                Icons.restaurant,
+                'Corp Meal',
+                'Developed a food ordering application allowing users to create shared delivery rooms and invite multiple participants.',
+                [
+                  'Room-based ordering',
+                  'Multiple participants workflow',
+                  'Real-time group ordering',
+                  'Restaurant-based meal selection',
+                  'Automated bill generation & shared delivery request',
+                ],
+                ['Flutter', 'Dart', 'REST APIs', 'Real-Time'],
+              ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).then(delay: 600.ms).slideY(begin: 0.05, end: 0, duration: 600.ms, curve: Curves.easeOut),
+              _buildSmallProjectCard(
+                context,
+                'FREELANCE',
+                Icons.spatial_tracking,
+                'Opportunity Guidance',
+                'A smart cross-platform mobile application for professional growth tracking.',
+                [
+                  'Responsive Flutter interface',
+                  'Firebase Authentication & Firestore',
+                  'Personalized profiles & opportunity data',
+                  'Real-time progress tracking',
+                  'Smart recommendations & user navigation',
+                ],
+                ['Flutter', 'Dart', 'Firebase', 'Firestore'],
+              ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).then(delay: 800.ms).slideY(begin: 0.05, end: 0, duration: 600.ms, curve: Curves.easeOut),
+            ],
+          ),
+        SizedBox(height: isMobile ? 80.h : 100.h),
       ],
+    ).animate().fadeIn(duration: 800.ms, curve: Curves.easeOut);
+  }
+
+  Widget _buildSmallProjectCard(
+    BuildContext context,
+    String projectType,
+    IconData projectIcon,
+    String title,
+    String description,
+    List<String> features,
+    List<String> technologies,
+  ) {
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = width < 1024;
+    final isSmallMobile = width < 375;
+    return Container(
+      width: isMobile ? double.infinity : 170.w,
+      padding: EdgeInsets.all(isMobile ? 20.sp : 7.sp),
+      decoration: BoxDecoration(color: Colors.black.withOpacity(0.05)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  projectType,
+                  style: TextStyle(
+                    color: AppColors.primaryAccent,
+                    fontFamily: 'Manrope',
+                    fontSize: isMobile
+                        ? (isSmallMobile ? 12.sp : 13.sp)
+                        : 3.5.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Icon(
+                projectIcon,
+                color: AppColors.primaryAccent,
+                size: isMobile ? (isSmallMobile ? 20.sp : 22.sp) : 5.sp,
+              ),
+            ],
+          ),
+          SizedBox(height: isMobile ? 20.h : 10.h),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: isMobile ? (isSmallMobile ? 18.sp : 20.sp) : 7.sp,
+              fontFamily: 'Manrope',
+            ),
+          ),
+          SizedBox(height: isMobile ? 16.h : 10.h),
+          Text(
+            description,
+            style: TextStyle(
+              height: isMobile ? 1.5 : 1.5,
+              color: Colors.black,
+              fontFamily: 'Manrope',
+              fontSize: isMobile ? (isSmallMobile ? 13.sp : 14.sp) : 3.8.sp,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          SizedBox(height: isMobile ? 20.h : 10.h),
+          ...features.map(
+            (feature) => Padding(
+              padding: EdgeInsets.only(bottom: isMobile ? 12.h : 5.h),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '•',
+                    style: TextStyle(
+                      color: AppColors.primaryAccent,
+                      fontSize: isMobile
+                          ? (isSmallMobile ? 16.sp : 18.sp)
+                          : 8.sp,
+                    ),
+                  ),
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: Text(
+                      feature,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: isMobile
+                            ? (isSmallMobile ? 13.sp : 14.sp)
+                            : 3.5.sp,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Manrope',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: isMobile ? 24.h : 20.h),
+          if (isMobile)
+            Wrap(
+              spacing: 8.w,
+              runSpacing: 8.h,
+              children: technologies.map(
+                    (tech) => Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 6.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryAccent.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(6.r),
+                  ),
+                  child: Text(
+                    tech,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: isSmallMobile ? 11.sp : 12.sp,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Manrope',
+                    ),
+                  ),
+                ),
+              ).toList(),
+            )
+          else
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: technologies.map(
+                    (tech) => Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 6.w,
+                    vertical: 4.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryAccent.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(3.r),
+                  ),
+                  child: Text(
+                    tech,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 3.sp,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Manrope',
+                    ),
+                  ),
+                ),
+              ).toList(),
+            ),
+        ],
+      ),
     );
   }
 }

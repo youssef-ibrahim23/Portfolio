@@ -5,8 +5,15 @@ import 'package:protofolio/core/constants/app_colors.dart';
 
 class IntroDesktopView extends StatelessWidget {
   final ScrollController? scrollController;
+  final GlobalKey? projectsKey;
+  final GlobalKey? contactKey;
 
-  const IntroDesktopView({super.key, this.scrollController});
+  const IntroDesktopView({
+    super.key,
+    this.scrollController,
+    this.projectsKey,
+    this.contactKey,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -119,9 +126,9 @@ class IntroDesktopView extends StatelessWidget {
                       ),
                       child: MaterialButton(
                         onPressed: () {
-                          if (scrollController != null) {
-                            scrollController!.animateTo(
-                              800,
+                          if (projectsKey != null) {
+                            Scrollable.ensureVisible(
+                              projectsKey!.currentContext!,
                               duration: const Duration(milliseconds: 500),
                               curve: Curves.easeInOut,
                             );
@@ -185,9 +192,9 @@ class IntroDesktopView extends StatelessWidget {
                     cursor: SystemMouseCursors.click,
                     child: GestureDetector(
                       onTap: () {
-                        if (scrollController != null) {
-                          scrollController!.animateTo(
-                            scrollController!.position.maxScrollExtent,
+                        if (contactKey != null) {
+                          Scrollable.ensureVisible(
+                            contactKey!.currentContext!,
                             duration: const Duration(milliseconds: 500),
                             curve: Curves.easeInOut,
                           );

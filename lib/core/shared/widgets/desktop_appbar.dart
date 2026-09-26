@@ -5,9 +5,15 @@ import 'package:protofolio/core/shared/widgets/navbar_item.dart';
 
 class DesktopAppBar extends PreferredSize {
   final ScrollController? scrollController;
+  final GlobalKey? projectsKey;
+  final GlobalKey? contactKey;
 
-  DesktopAppBar({super.key, this.scrollController})
-      : super(
+  DesktopAppBar({
+    super.key,
+    this.scrollController,
+    this.projectsKey,
+    this.contactKey,
+  }) : super(
     preferredSize: const Size.fromHeight(kToolbarHeight),
     child: AppBar(
       backgroundColor: Colors.white,
@@ -72,11 +78,27 @@ class DesktopAppBar extends PreferredSize {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              NavbarItem(label: 'Home', first: true, scrollController: scrollController),
+              NavbarItem(
+                label: 'Home',
+                first: true,
+                scrollController: scrollController,
+                projectsKey: projectsKey,
+                contactKey: contactKey,
+              ),
               SizedBox(width: 10.w,),
-              NavbarItem(label: 'Projects', scrollController: scrollController),
+              NavbarItem(
+                label: 'Projects',
+                scrollController: scrollController,
+                projectsKey: projectsKey,
+                contactKey: contactKey,
+              ),
               SizedBox(width: 10.w,),
-              NavbarItem(label: 'Contact', scrollController: scrollController),
+              NavbarItem(
+                label: 'Contact',
+                scrollController: scrollController,
+                projectsKey: projectsKey,
+                contactKey: contactKey,
+              ),
             ],
           ),
         ),

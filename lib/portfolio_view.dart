@@ -19,66 +19,84 @@ class PortfolioView extends StatefulWidget {
 
 class _PortfolioViewState extends State<PortfolioView> {
   final ScrollController _scrollController = ScrollController();
+  
+  // GlobalKeys for scroll targeting
+  final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-
-    final isDesktop = MediaQuery
-        .sizeOf(context)
-        .width >= 1024;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isDesktop = screenWidth >= 1024;
+    final isSmallMobile = screenWidth < 375;
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: isDesktop
-          ? DesktopAppBar(scrollController: _scrollController)
+          ? DesktopAppBar(
+              scrollController: _scrollController,
+              projectsKey: _projectsKey,
+              contactKey: _contactKey,
+            )
           : MobileAppbar(),
-      endDrawer: isDesktop ? null : MobileDrawer(scrollController: _scrollController),
+      endDrawer: isDesktop ? null : MobileDrawer(
+        scrollController: _scrollController,
+        projectsKey: _projectsKey,
+        contactKey: _contactKey,
+      ),
       body: SingleChildScrollView(
         controller: _scrollController,
         child: GridBackground(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              IntroPresenter(scrollController: _scrollController),
-              SizedBox(height: 150.h,),
+              IntroPresenter(
+                scrollController: _scrollController,
+                projectsKey: _projectsKey,
+                contactKey: _contactKey,
+              ),
+              SizedBox(height: isSmallMobile ? 120.h : 70.h,),
               Padding(
-                padding: EdgeInsets.only(left:  20.w),
+                key: _projectsKey,
+                padding: EdgeInsets.only(left: 20.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: 60.h,
-                      width: 2.w,
+                      height: isSmallMobile ? 60.h : 70.h,
+                      width: 3.w,
                       decoration: BoxDecoration(
                         color: AppColors.primaryAccent,
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                     ),
-                    SizedBox(width: 7.w),
+                    SizedBox(width: 10.w),
                     Text(
                       'Featured Mobile Projects',
                       style: TextStyle(
                         color: AppColors.primaryText,
                         fontFamily: 'Manrope',
-                        fontSize: 10.sp,
+                        fontSize: isDesktop ? 10.sp : 22.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
               ),
-
-              SizedBox(height: 13.h),
-
               ProjectsPresenter(),
 
-              SizedBox(height: 100.h),
+              SizedBox(height: isSmallMobile ? 70.h : 20.h),
 
-              ContactMePresenter(),
+              Padding(
+                padding: EdgeInsetsGeometry.only(),
+                key: _contactKey,
+                child: ContactMePresenter(),
+              ),
 
-              SizedBox(height: 60.h),
+              SizedBox(height: isSmallMobile ? 80.h : 100.h),
 
-              Footer(),
+              const Footer(),
+
             ],
           ),
         ),

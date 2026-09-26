@@ -47,19 +47,30 @@ class _LiveMobileMockupState extends State<LiveMobileMockup> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isMobile = screenWidth < 1024;
+    final isSmallMobile = screenWidth < 375;
+    
+    // Responsive sizing for mobile view
+    final mockupWidth = isMobile 
+        ? (isSmallMobile ? screenWidth * 0.85 : screenWidth * 0.9)
+        : widget.width.w;
+    final mockupHeight = isMobile 
+        ? (isSmallMobile ? screenWidth * 1.8 : screenWidth * 1.6)
+        : widget.height.h;
+    
     return Container(
-        width: widget.width.w,
-        height: widget.height.h,
-        padding: const EdgeInsets.all(8),
+        width: mockupWidth,
+        height: mockupHeight,
+        padding: EdgeInsets.all(isMobile ? 6 : 8),
         decoration: BoxDecoration(
           color: const Color(0xFF111111),
-          borderRadius: BorderRadius.circular(38),
-        
+          borderRadius: BorderRadius.circular(isMobile ? 30 : 38),
         ),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.black,
-            borderRadius: BorderRadius.circular(31),
+            borderRadius: BorderRadius.circular(isMobile ? 24 : 31),
           ),
           clipBehavior: Clip.antiAlias,
           child: HtmlElementView(

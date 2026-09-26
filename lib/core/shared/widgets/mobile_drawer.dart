@@ -5,29 +5,36 @@ import 'package:protofolio/core/shared/widgets/drawer_item.dart';
 
 class MobileDrawer extends StatelessWidget {
   final ScrollController? scrollController;
+  final GlobalKey? projectsKey;
+  final GlobalKey? contactKey;
 
-  const MobileDrawer({super.key, this.scrollController});
+  const MobileDrawer({
+    super.key,
+    this.scrollController,
+    this.projectsKey,
+    this.contactKey,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isSmallMobile = screenWidth < 375;
+    
     return Drawer(
       backgroundColor: Colors.white,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           Container(
-            height: 200.h,
-            padding: EdgeInsets.symmetric(
-              horizontal: 50.w,
-              vertical: 30.h,
-            ),
+            padding: EdgeInsets.all(12.sp),
+            height: isSmallMobile ? 200.h : 220.h,
             color: AppColors.primaryAccent,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: 110.w,
-                  height: 110.w,
+                  width: isSmallMobile ? 110.w : 120.w,
+                  height: isSmallMobile ? 110.w : 120.w,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.red.withOpacity(0.5),
@@ -44,24 +51,25 @@ class MobileDrawer extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 15.h,),
+                SizedBox(height: 10.h,),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Youssef Ibrahim',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18.sp,
+                        fontSize: isSmallMobile ? 18.sp : 16.sp,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Manrope',
                       ),
                     ),
+                    SizedBox(width: 10.h),
                     Text(
                       'Flutter Developer',
                       style: TextStyle(
                         color: Colors.white70,
-                        fontSize: 14.sp,
+                        fontSize: isSmallMobile ? 14.sp : 13.sp,
                         fontFamily: 'Manrope',
                       ),
                     ),
@@ -70,12 +78,24 @@ class MobileDrawer extends StatelessWidget {
               ],
             ),
           ),
-          DrawerItem(title: 'Home', scrollController: scrollController),
-          DrawerItem(title: 'About', scrollController: scrollController),
-          DrawerItem(title: 'Projects', scrollController: scrollController),
-          DrawerItem(title: 'Experience', scrollController: scrollController),
-          DrawerItem(title: 'Education', scrollController: scrollController),
-          DrawerItem(title: 'Contact', scrollController: scrollController),
+          DrawerItem(
+            title: 'Home',
+            scrollController: scrollController,
+            projectsKey: projectsKey,
+            contactKey: contactKey,
+          ),
+          DrawerItem(
+            title: 'Projects',
+            scrollController: scrollController,
+            projectsKey: projectsKey,
+            contactKey: contactKey,
+          ),
+          DrawerItem(
+            title: 'Contact',
+            scrollController: scrollController,
+            projectsKey: projectsKey,
+            contactKey: contactKey,
+          ),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protofolio/core/constants/app_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -28,7 +29,7 @@ class ContactDesktopView extends StatelessWidget {
               fontSize: 20.sp,
               fontWeight: FontWeight.bold,
             ),
-          ),
+          ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut),
           SizedBox(height: 20.h),
           Text(
             'Feel free to reach out for collaborations or just a friendly hello!',
@@ -38,7 +39,7 @@ class ContactDesktopView extends StatelessWidget {
               fontSize: 6.sp,
               fontWeight: FontWeight.w400,
             ),
-          ),
+          ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).then(delay: 200.ms),
           SizedBox(height: 60.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -48,25 +49,25 @@ class ContactDesktopView extends StatelessWidget {
                 title: 'Email',
                 value: 'ymohamed2602@gmail.com',
                 onTap: () => _launchUrl('mailto:ymohamed2602@gmail.com'),
-              ),
+              ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).then(delay: 400.ms).slideY(begin: 0.05, end: 0, duration: 600.ms, curve: Curves.easeOut),
               SizedBox(width: 30.w),
               _ContactCard(
                 icon: Icons.phone,
                 title: 'Phone',
                 value: '+201282077343',
                 onTap: () => _launchUrl('tel:+201282077343'),
-              ),
+              ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).then(delay: 600.ms).slideY(begin: 0.05, end: 0, duration: 600.ms, curve: Curves.easeOut),
               SizedBox(width: 30.w),
               _ContactCard(
                 icon: Icons.link,
                 title: 'LinkedIn',
                 value: 'Connect with me',
                 onTap: () => _launchUrl('https://www.linkedin.com/in/youssef-ibrahim-052581383/'),
-              ),
+              ).animate().fadeIn(duration: 600.ms, curve: Curves.easeOut).then(delay: 800.ms).slideY(begin: 0.05, end: 0, duration: 600.ms, curve: Curves.easeOut),
             ],
           ),
         ],
-      ),
+      ).animate().fadeIn(duration: 800.ms, curve: Curves.easeOut),
     );
   }
 }
