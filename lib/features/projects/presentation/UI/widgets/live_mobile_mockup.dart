@@ -22,6 +22,7 @@ class LiveMobileMockup extends StatefulWidget {
 class _LiveMobileMockupState extends State<LiveMobileMockup> {
   late final String _viewType;
   bool _isLoaded = false;
+  bool _isIframeLoaded = false;
 
   @override
   void initState() {
@@ -42,9 +43,13 @@ class _LiveMobileMockupState extends State<LiveMobileMockup> {
           ..loading = 'lazy' // Lazy load iframe content
           ..style.opacity = '0'; // Start invisible
 
-        // Fade in when loaded
+        // Fade in when loaded and notify Flutter
         iframe.onLoad.listen((_) {
-          iframe.style.transition = 'opacity 0.3s ease-in';
+          // Mark iframe as loaded
+          _onIframeLoaded();
+          
+          // Fade in the iframe
+          iframe.style.transition = 'opacity 0.5s ease-in';
           iframe.style.opacity = '1';
         });
 
@@ -52,14 +57,31 @@ class _LiveMobileMockupState extends State<LiveMobileMockup> {
       },
     );
 
-    // Mark as loaded after a short delay
-    Future.delayed(const Duration(milliseconds: 100), () {
+    // Show iframe after a short initial delay (to allow loading indicator to show)
+    Future.delayed(const Duration(milliseconds: 300), () {
       if (mounted) {
         setState(() {
           _isLoaded = true;
         });
       }
     });
+
+    // Fallback: Hide loading indicator after 5 seconds even if iframe doesn't report as loaded
+    Future.delayed(const Duration(seconds: 5), () {
+      if (mounted && !_isIframeLoaded) {
+        setState(() {
+          _isIframeLoaded = true;
+        });
+      }
+    });
+  }
+
+  void _onIframeLoaded() {
+    if (mounted && !_isIframeLoaded) {
+      setState(() {
+        _isIframeLoaded = true;
+      });
+    }
   }
 
   @override
@@ -91,16 +113,23 @@ class _LiveMobileMockupState extends State<LiveMobileMockup> {
             borderRadius: BorderRadius.circular(isMobile ? 24 : 31),
           ),
           clipBehavior: Clip.antiAlias,
-          child: _isLoaded
-              ? HtmlElementView(
+          child: Stack(
+            children: [
+              // The iframe (always rendered but starts invisible)
+              if (_isLoaded)
+                HtmlElementView(
                   viewType: _viewType,
-                )
-              : const Center(
+                ),
+              // Loading indicator (shown until iframe is loaded)
+              if (!_isIframeLoaded)
+                const Center(
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                 ),
+            ],
+          ),
         ),
       ),
     );

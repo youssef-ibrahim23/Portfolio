@@ -398,7 +398,7 @@ class ProjectSection extends StatelessWidget {
                     margin: EdgeInsets.only(left: 10.w),
                     alignment: Alignment.center,
                     height: isSmallMobile ? 32.h : 36.h,
-                    width: isSmallMobile ? 100.w : 200.w,
+                    width:  180.w,
                     decoration: BoxDecoration(
                       color: publishedBackgroundColor,
                       borderRadius: BorderRadius.circular(6.r),

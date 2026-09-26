@@ -29,7 +29,7 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
               style: TextStyle(
                 height: 2.h,
                 color: AppColors.secondaryText,
-                fontSize: isMobile ? (isSmallMobile ? 14.sp : 14.sp) : 5.sp,
+                fontSize: isMobile ? 14.sp : 5.sp,
                 fontWeight: FontWeight.w400,
                 fontFamily: 'Manrope',
               ),

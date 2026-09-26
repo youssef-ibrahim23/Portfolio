@@ -70,7 +70,7 @@ class _PortfolioViewState extends State<PortfolioView> {
                 projectsKey: _projectsKey,
                 contactKey: _contactKey,
               ),
-              SizedBox(height: isSmallMobile ? 120.h : 70.h,),
+              SizedBox(height:  70.h,),
               Padding(
                 key: _projectsKey,
                 padding: EdgeInsets.only(left: 20.w),

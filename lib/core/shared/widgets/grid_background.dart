@@ -23,11 +23,11 @@ class _GridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFFEAEAEA)
-      ..strokeWidth = 0.5
+      ..color = const Color(0xFFE0E0E0)
+      ..strokeWidth = 1.0
       ..isAntiAlias = false; // Disable anti-aliasing for grid lines
 
-    const double gridSize = 30;
+    const double gridSize = 40;
 
     // Calculate number of lines needed
     final horizontalLines = (size.height / gridSize).ceil() + 1;

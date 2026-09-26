@@ -23,8 +23,8 @@ class IntroMobileView extends StatelessWidget {
     
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: isSmallMobile ? 20.w : 24.w,
-        vertical: isSmallMobile ? 40.h : 50.h,
+        horizontal: 24.w,
+        vertical: 50.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -187,7 +187,7 @@ class IntroMobileView extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: isSmallMobile ? 16.h : 40.h),
+              SizedBox(height: 40.h),
               MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: Container(
@@ -227,7 +227,7 @@ class IntroMobileView extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: isSmallMobile ? 16.h : 40.h,),
+              SizedBox(height:  40.h,),
               GestureDetector(
                 onTap: () {
                   if (contactKey != null) {
@@ -261,11 +261,11 @@ class IntroMobileView extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: isSmallMobile ? 30.h : 40.h),
+          SizedBox(height: 40.h),
           Wrap(
             alignment: WrapAlignment.center,
-            spacing: isSmallMobile ? 10.w : 12.w,
-            runSpacing: isSmallMobile ? 10.h : 12.h,
+            spacing: 12.w,
+            runSpacing:  12.h,
             children: [
               _buildSkillChip('Flutter', context),
               _buildSkillChip('Dart', context),
