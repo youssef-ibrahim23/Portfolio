@@ -37,9 +37,9 @@ class MobileDrawer extends StatelessWidget {
                   height: isSmallMobile ? 110.w : 120.w,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.red.withOpacity(0.5),
+                    color: const Color(0x80FF0000),
                     border: Border.all(
-                      color: Colors.white.withOpacity(0.7),
+                      color: const Color(0xB3FFFFFF),
                       width: 2,
                     ),
                   ),
@@ -47,7 +47,18 @@ class MobileDrawer extends StatelessWidget {
                     child: Image.asset(
                       'assets/images/my_photo.png',
                       fit: BoxFit.contain,
-
+                      gaplessPlayback: true,
+                      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                        if (wasSynchronouslyLoaded) {
+                          return child;
+                        }
+                        return AnimatedOpacity(
+                          opacity: frame == null ? 0 : 1,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut,
+                          child: child,
+                        );
+                      },
                     ),
                   ),
                 ),

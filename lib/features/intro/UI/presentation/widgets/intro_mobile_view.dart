@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protofolio/core/constants/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IntroMobileView extends StatelessWidget {
   final ScrollController? scrollController;
@@ -39,7 +40,7 @@ class IntroMobileView extends StatelessWidget {
                 width: isSmallMobile ? 140.w : 160.w,
                 height: isSmallMobile ? 160.h : 190.h,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryAccent.withOpacity(0.3),
+                  color: AppColors.primaryAccent30,
                   borderRadius: BorderRadius.circular(500.r),
                 ),
               ),
@@ -48,6 +49,18 @@ class IntroMobileView extends StatelessWidget {
                   'assets/images/my_photo.png',
                   width: isSmallMobile ? 160.sp : 190.sp,
                   fit: BoxFit.cover,
+                  gaplessPlayback: true,
+                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                    if (wasSynchronouslyLoaded) {
+                      return child;
+                    }
+                    return AnimatedOpacity(
+                      opacity: frame == null ? 0 : 1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                      child: child,
+                    );
+                  },
                 ).animate()
                     .fadeIn(duration: 700.ms, curve: Curves.easeOut)
                     .scale(begin: Offset(0.85, 0.85), end: Offset(1, 1), duration: 700.ms, curve: Curves.easeOutBack)
@@ -63,7 +76,7 @@ class IntroMobileView extends StatelessWidget {
               vertical: isSmallMobile ? 8.h : 10.h,
             ),
             decoration: BoxDecoration(
-              color: AppColors.primaryAccent.withOpacity(0.1),
+              color: AppColors.primaryAccent10,
               borderRadius: BorderRadius.circular(24.r),
             ),
             child: Row(
@@ -186,7 +199,12 @@ class IntroMobileView extends StatelessWidget {
                     color: AppColors.primaryAccent,
                   ),
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final uri = Uri.parse('https://drive.google.com/file/d/1ub-Ys5X_s0Ie3R0Vtu3fgOG6TiRksIXH/view?usp=sharing');
+                      if (await canLaunchUrl(uri)) {
+                        await launchUrl(uri);
+                      }
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -275,7 +293,7 @@ class IntroMobileView extends StatelessWidget {
         color: AppColors.lightAccentBackground,
         borderRadius: BorderRadius.circular(24.r),
         border: Border.all(
-          color: AppColors.primaryAccent.withOpacity(0.2),
+          color: AppColors.primaryAccent20,
         ),
       ),
       child: Text(

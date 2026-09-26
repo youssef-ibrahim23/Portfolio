@@ -24,11 +24,26 @@ class _PortfolioViewState extends State<PortfolioView> {
   final GlobalKey _projectsKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
 
+  // Cache responsive values
+  double? _cachedScreenWidth;
+  bool? _cachedIsDesktop;
+  bool? _cachedIsSmallMobile;
+
+  void _updateResponsiveValues(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    if (_cachedScreenWidth != screenWidth) {
+      _cachedScreenWidth = screenWidth;
+      _cachedIsDesktop = screenWidth >= 1024;
+      _cachedIsSmallMobile = screenWidth < 375;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    final isDesktop = screenWidth >= 1024;
-    final isSmallMobile = screenWidth < 375;
+    _updateResponsiveValues(context);
+    
+    final isDesktop = _cachedIsDesktop ?? false;
+    final isSmallMobile = _cachedIsSmallMobile ?? false;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -88,7 +103,7 @@ class _PortfolioViewState extends State<PortfolioView> {
               SizedBox(height: isSmallMobile ? 70.h : 20.h),
 
               Padding(
-                padding: EdgeInsetsGeometry.only(),
+                padding: EdgeInsets.zero,
                 key: _contactKey,
                 child: ContactMePresenter(),
               ),

@@ -98,7 +98,7 @@ class _ContactCard extends StatelessWidget {
             color: AppColors.lightAccentBackground,
             borderRadius: BorderRadius.circular(15.r),
             border: Border.all(
-              color: AppColors.primaryAccent.withOpacity(0.2),
+              color: AppColors.primaryAccent20,
               width: 1,
             ),
           ),

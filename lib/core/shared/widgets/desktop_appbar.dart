@@ -52,10 +52,10 @@ class DesktopAppBar extends PreferredSize {
               width: 23.w,
               height: 20.h,
               decoration: BoxDecoration(
-                color: AppColors.primaryAccent.withOpacity(0.1),
+                color: AppColors.primaryAccent10,
                 borderRadius: BorderRadius.circular(5.r),
                 border: Border.all(
-                  color: AppColors.primaryAccent.withOpacity(0.3),
+                  color: AppColors.primaryAccent30,
                 ),
               ),
               child: Text(
@@ -116,16 +116,28 @@ class DesktopAppBar extends PreferredSize {
           width: 8.w,
           height: 40.h,
           decoration: BoxDecoration(
-            color: AppColors.primaryAccent.withOpacity(0.1),
+            color: AppColors.primaryAccent10,
             shape: BoxShape.circle,
             border: Border.all(
-              color: AppColors.primaryAccent.withOpacity(0.3),
+              color: AppColors.primaryAccent30,
             ),
           ),
           child: ClipOval(
             child: Image.asset(
               'assets/images/my_photo.png',
               fit: BoxFit.cover,
+              gaplessPlayback: true,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) {
+                  return child;
+                }
+                return AnimatedOpacity(
+                  opacity: frame == null ? 0 : 1,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                  child: child,
+                );
+              },
             ),
           ),
         ),

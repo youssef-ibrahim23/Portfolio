@@ -53,10 +53,10 @@ MobileAppbar({super.key})
                   vertical: isSmallMobile ? 4.h : 5.h,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryAccent.withOpacity(0.1),
+                  color: AppColors.primaryAccent10,
                   borderRadius: BorderRadius.circular(8.r),
                   border: Border.all(
-                    color: AppColors.primaryAccent.withOpacity(0.3),
+                    color: AppColors.primaryAccent30,
                   ),
                 ),
                 child: Text(

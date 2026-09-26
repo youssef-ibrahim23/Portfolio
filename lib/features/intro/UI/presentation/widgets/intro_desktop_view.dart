@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protofolio/core/constants/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IntroDesktopView extends StatelessWidget {
   final ScrollController? scrollController;
@@ -32,7 +33,7 @@ class IntroDesktopView extends StatelessWidget {
                 width: 50.w,
                 height: 30.h,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryAccent.withOpacity(0.1),
+                  color: AppColors.primaryAccent10,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -165,7 +166,12 @@ class IntroDesktopView extends StatelessWidget {
                         color: AppColors.primaryAccent,
                       ),
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final uri = Uri.parse('https://drive.google.com/file/d/1ub-Ys5X_s0Ie3R0Vtu3fgOG6TiRksIXH/view?usp=sharing');
+                          if (await canLaunchUrl(uri)) {
+                            await launchUrl(uri);
+                          }
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -324,38 +330,52 @@ class IntroDesktopView extends StatelessWidget {
           Column(
             children: [
               SizedBox(height: 30.h),
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 5.w,
-                      top: 190.h,
+              RepaintBoundary(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: 5.w,
+                        top: 190.h,
+                      ),
+                      width: 100.w,
+                      height: 440.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryAccent10,
+                        borderRadius: BorderRadius.circular(500.r),
+                      ),
                     ),
-                    width: 100.w,
-                    height: 440.h,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryAccent.withOpacity(0.08),
-                      borderRadius: BorderRadius.circular(500.r),
+                    ClipOval(
+                      child: Image.asset(
+                        'assets/images/my_photo.png',
+                        width: 110.sp,
+                        fit: BoxFit.cover,
+                        gaplessPlayback: true,
+                        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                          if (wasSynchronouslyLoaded) {
+                            return child;
+                          }
+                          return AnimatedOpacity(
+                            opacity: frame == null ? 0 : 1,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                            child: child,
+                          );
+                        },
+                      ).animate()
+                          .fadeIn(duration: 700.ms, curve: Curves.easeOut)
+                          .scale(
+                        begin: const Offset(0.85, 0.85),
+                        end: const Offset(1, 1),
+                        duration: 700.ms,
+                        curve: Curves.easeOutBack,
+                      )
+                          .animate(onPlay: (c) => c.repeat(reverse: true))
+                          .moveY(begin: -6, end: 6, duration: 2800.ms, curve: Curves.easeInOut),
                     ),
-                  ),
-                  ClipOval(
-                    child: Image.asset(
-                      'assets/images/my_photo.png',
-                      width: 110.sp,
-                      fit: BoxFit.cover,
-                    ).animate()
-                        .fadeIn(duration: 700.ms, curve: Curves.easeOut)
-                        .scale(
-                      begin: const Offset(0.85, 0.85),
-                      end: const Offset(1, 1),
-                      duration: 700.ms,
-                      curve: Curves.easeOutBack,
-                    )
-                        .animate(onPlay: (c) => c.repeat(reverse: true))
-                        .moveY(begin: -6, end: 6, duration: 2800.ms, curve: Curves.easeInOut),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

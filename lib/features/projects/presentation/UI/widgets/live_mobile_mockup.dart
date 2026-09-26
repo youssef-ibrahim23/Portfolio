@@ -21,28 +21,45 @@ class LiveMobileMockup extends StatefulWidget {
 
 class _LiveMobileMockupState extends State<LiveMobileMockup> {
   late final String _viewType;
+  bool _isLoaded = false;
 
   @override
   void initState() {
     super.initState();
 
-    _viewType =
-    'live-mobile-${DateTime.now().microsecondsSinceEpoch}';
+    _viewType = 'live-mobile-${widget.url.hashCode}';
 
     ui_web.platformViewRegistry.registerViewFactory(
       _viewType,
-          (int viewId) {
+      (int viewId) {
         final iframe = web.HTMLIFrameElement()
           ..src = widget.url
           ..style.border = 'none'
           ..style.width = '100%'
           ..style.height = '100%'
           ..style.display = 'block'
-          ..allow = 'autoplay; fullscreen';
+          ..allow = 'autoplay; fullscreen'
+          ..loading = 'lazy' // Lazy load iframe content
+          ..style.opacity = '0'; // Start invisible
+
+        // Fade in when loaded
+        iframe.onLoad.listen((_) {
+          iframe.style.transition = 'opacity 0.3s ease-in';
+          iframe.style.opacity = '1';
+        });
 
         return iframe;
       },
     );
+
+    // Mark as loaded after a short delay
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (mounted) {
+        setState(() {
+          _isLoaded = true;
+        });
+      }
+    });
   }
 
   @override
@@ -59,9 +76,10 @@ class _LiveMobileMockupState extends State<LiveMobileMockup> {
         ? (isSmallMobile ? screenWidth * 1.8 : screenWidth * 1.6)
         : widget.height.h;
     
-    return Container(
-        width: mockupWidth,
-        height: mockupHeight,
+    return SizedBox(
+      width: mockupWidth,
+      height: mockupHeight,
+      child: Container(
         padding: EdgeInsets.all(isMobile ? 6 : 8),
         decoration: BoxDecoration(
           color: const Color(0xFF111111),
@@ -73,10 +91,18 @@ class _LiveMobileMockupState extends State<LiveMobileMockup> {
             borderRadius: BorderRadius.circular(isMobile ? 24 : 31),
           ),
           clipBehavior: Clip.antiAlias,
-          child: HtmlElementView(
-            viewType: _viewType,
-          ),
+          child: _isLoaded
+              ? HtmlElementView(
+                  viewType: _viewType,
+                )
+              : const Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                ),
         ),
+      ),
     );
   }
 }

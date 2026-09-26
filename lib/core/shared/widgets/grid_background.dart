@@ -10,9 +10,11 @@ class GridBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _GridPainter(),
-      child: child,
+    return RepaintBoundary(
+      child: CustomPaint(
+        painter: _GridPainter(),
+        child: child,
+      ),
     );
   }
 }
@@ -22,11 +24,18 @@ class _GridPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = const Color(0xFFEAEAEA)
-      ..strokeWidth = 0.5;
+      ..strokeWidth = 0.5
+      ..isAntiAlias = false; // Disable anti-aliasing for grid lines
 
     const double gridSize = 30;
 
-    for (double x = 0; x <= size.width; x += gridSize) {
+    // Calculate number of lines needed
+    final horizontalLines = (size.height / gridSize).ceil() + 1;
+    final verticalLines = (size.width / gridSize).ceil() + 1;
+
+    // Draw vertical lines
+    for (int i = 0; i < verticalLines; i++) {
+      final x = i * gridSize;
       canvas.drawLine(
         Offset(x, 0),
         Offset(x, size.height),
@@ -34,7 +43,9 @@ class _GridPainter extends CustomPainter {
       );
     }
 
-    for (double y = 0; y <= size.height; y += gridSize) {
+    // Draw horizontal lines
+    for (int i = 0; i < horizontalLines; i++) {
+      final y = i * gridSize;
       canvas.drawLine(
         Offset(0, y),
         Offset(size.width, y),
