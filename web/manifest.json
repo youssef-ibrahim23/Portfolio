@@ -1,11 +1,11 @@
 {
-    "name": "portfolio",
-    "short_name": "portfolio",
+    "name": "Youssef Ibrahim Portfolio",
+    "short_name": "Youssef Ibrahim",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "Flutter Developer Portfolio",
+    "background_color": "#FFFFFF",
+    "theme_color": "#8B0000",
+    "description": "Flutter Developer Portfolio - Cross-platform mobile applications",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
