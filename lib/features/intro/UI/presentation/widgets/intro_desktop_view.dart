@@ -6,12 +6,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 class IntroDesktopView extends StatelessWidget {
   final ScrollController? scrollController;
+  final GlobalKey? experienceKey;
+  final GlobalKey? skillsKey;
   final GlobalKey? projectsKey;
   final GlobalKey? contactKey;
 
   const IntroDesktopView({
     super.key,
     this.scrollController,
+    this.experienceKey,
+    this.skillsKey,
     this.projectsKey,
     this.contactKey,
   });
@@ -127,9 +131,9 @@ class IntroDesktopView extends StatelessWidget {
                       ),
                       child: MaterialButton(
                         onPressed: () {
-                          if (projectsKey != null) {
+                          if (experienceKey != null) {
                             Scrollable.ensureVisible(
-                              projectsKey!.currentContext!,
+                              experienceKey!.currentContext!,
                               duration: const Duration(milliseconds: 500),
                               curve: Curves.easeInOut,
                             );
@@ -139,7 +143,7 @@ class IntroDesktopView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
-                              'View My Projects',
+                              'View My Experience',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'Manrope',

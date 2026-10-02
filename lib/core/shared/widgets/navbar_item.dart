@@ -6,6 +6,8 @@ class NavbarItem extends StatefulWidget {
   final String label;
   final bool first;
   final ScrollController? scrollController;
+  final GlobalKey? experienceKey;
+  final GlobalKey? skillsKey;
   final GlobalKey? projectsKey;
   final GlobalKey? contactKey;
 
@@ -14,6 +16,8 @@ class NavbarItem extends StatefulWidget {
     required this.label,
     this.first = false,
     this.scrollController,
+    this.experienceKey,
+    this.skillsKey,
     this.projectsKey,
     this.contactKey,
   });
@@ -54,6 +58,24 @@ class _NavbarItemState extends State<NavbarItem> {
                 if (widget.projectsKey != null) {
                   Scrollable.ensureVisible(
                     widget.projectsKey!.currentContext!,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                }
+                break;
+              case 'skills':
+                if (widget.skillsKey != null) {
+                  Scrollable.ensureVisible(
+                    widget.skillsKey!.currentContext!,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                }
+                break;
+              case 'experience':
+                if (widget.experienceKey != null) {
+                  Scrollable.ensureVisible(
+                    widget.experienceKey!.currentContext!,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
                   );

@@ -5,12 +5,16 @@ import 'package:protofolio/core/shared/widgets/drawer_item.dart';
 
 class MobileDrawer extends StatelessWidget {
   final ScrollController? scrollController;
+  final GlobalKey? experienceKey;
+  final GlobalKey? skillsKey;
   final GlobalKey? projectsKey;
   final GlobalKey? contactKey;
 
   const MobileDrawer({
     super.key,
     this.scrollController,
+    this.experienceKey,
+    this.skillsKey,
     this.projectsKey,
     this.contactKey,
   });
@@ -92,18 +96,40 @@ class MobileDrawer extends StatelessWidget {
           DrawerItem(
             title: 'Home',
             scrollController: scrollController,
+            experienceKey: experienceKey,
+            skillsKey: skillsKey,
+            projectsKey: projectsKey,
+            contactKey: contactKey,
+          ),
+          DrawerItem(
+            title: 'Experience',
+            scrollController: scrollController,
+            experienceKey: experienceKey,
+            skillsKey: skillsKey,
+            projectsKey: projectsKey,
+            contactKey: contactKey,
+          ),
+          DrawerItem(
+            title: 'Skills',
+            scrollController: scrollController,
+            experienceKey: experienceKey,
+            skillsKey: skillsKey,
             projectsKey: projectsKey,
             contactKey: contactKey,
           ),
           DrawerItem(
             title: 'Projects',
             scrollController: scrollController,
+            experienceKey: experienceKey,
+            skillsKey: skillsKey,
             projectsKey: projectsKey,
             contactKey: contactKey,
           ),
           DrawerItem(
             title: 'Contact',
             scrollController: scrollController,
+            experienceKey: experienceKey,
+            skillsKey: skillsKey,
             projectsKey: projectsKey,
             contactKey: contactKey,
           ),

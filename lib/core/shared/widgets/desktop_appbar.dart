@@ -5,12 +5,16 @@ import 'package:protofolio/core/shared/widgets/navbar_item.dart';
 
 class DesktopAppBar extends PreferredSize {
   final ScrollController? scrollController;
+  final GlobalKey? experienceKey;
+  final GlobalKey? skillsKey;
   final GlobalKey? projectsKey;
   final GlobalKey? contactKey;
 
   DesktopAppBar({
     super.key,
     this.scrollController,
+    this.experienceKey,
+    this.skillsKey,
     this.projectsKey,
     this.contactKey,
   }) : super(
@@ -74,7 +78,7 @@ class DesktopAppBar extends PreferredSize {
       actions: [
         Container(
           padding: EdgeInsets.only(right: 5.w),
-          width: 175.w,
+          width: 220.w,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -82,6 +86,26 @@ class DesktopAppBar extends PreferredSize {
                 label: 'Home',
                 first: true,
                 scrollController: scrollController,
+                experienceKey: experienceKey,
+                skillsKey: skillsKey,
+                projectsKey: projectsKey,
+                contactKey: contactKey,
+              ),
+              SizedBox(width: 10.w,),
+              NavbarItem(
+                label: 'Experience',
+                scrollController: scrollController,
+                experienceKey: experienceKey,
+                skillsKey: skillsKey,
+                projectsKey: projectsKey,
+                contactKey: contactKey,
+              ),
+              SizedBox(width: 10.w,),
+              NavbarItem(
+                label: 'Skills',
+                scrollController: scrollController,
+                experienceKey: experienceKey,
+                skillsKey: skillsKey,
                 projectsKey: projectsKey,
                 contactKey: contactKey,
               ),
@@ -89,6 +113,8 @@ class DesktopAppBar extends PreferredSize {
               NavbarItem(
                 label: 'Projects',
                 scrollController: scrollController,
+                experienceKey: experienceKey,
+                skillsKey: skillsKey,
                 projectsKey: projectsKey,
                 contactKey: contactKey,
               ),
@@ -96,6 +122,8 @@ class DesktopAppBar extends PreferredSize {
               NavbarItem(
                 label: 'Contact',
                 scrollController: scrollController,
+                experienceKey: experienceKey,
+                skillsKey: skillsKey,
                 projectsKey: projectsKey,
                 contactKey: contactKey,
               ),

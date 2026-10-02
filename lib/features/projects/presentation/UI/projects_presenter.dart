@@ -161,7 +161,7 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
               _buildSmallProjectCard(
                 context,
                 'REAL PROJECT',
-                Icons.restaurant,
+                'assets/images/corp_meal_logo.png',
                 'Corp Meal',
                 'Developed a food ordering application allowing users to create shared delivery rooms and invite multiple participants.',
                 [
@@ -177,7 +177,7 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
               _buildSmallProjectCard(
                 context,
                 'FREELANCE',
-                Icons.spatial_tracking,
+                'assets/images/opportunity_guidance_logo.png',
                 'Opportunity Guidance',
                 'A smart cross-platform mobile application for professional growth tracking.',
                 [
@@ -199,7 +199,7 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
               _buildSmallProjectCard(
                 context,
                 'REAL PROJECT',
-                Icons.restaurant,
+                'assets/images/corp_meal_logo.png',
                 'Corp Meal',
                 'Developed a food ordering application allowing users to create shared delivery rooms and invite multiple participants.',
                 [
@@ -214,7 +214,7 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
               _buildSmallProjectCard(
                 context,
                 'FREELANCE',
-                Icons.spatial_tracking,
+                'assets/images/opportunity_guidance_logo.png',
                 'Opportunity Guidance',
                 'A smart cross-platform mobile application for professional growth tracking.',
                 [
@@ -236,7 +236,7 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
   Widget _buildSmallProjectCard(
     BuildContext context,
     String projectType,
-    IconData projectIcon,
+    String logoAsset,
     String title,
     String description,
     List<String> features,
@@ -268,10 +268,11 @@ class _ProjectsPresenterState extends State<ProjectsPresenter> {
                   ),
                 ),
               ),
-              Icon(
-                projectIcon,
-                color: AppColors.primaryAccent,
-                size: isMobile ? (isSmallMobile ? 20.sp : 22.sp) : 5.sp,
+              Image.asset(
+                logoAsset,
+                width: isMobile ? (isSmallMobile ? 20.sp : 22.sp) : 5.sp,
+                height: isMobile ? (isSmallMobile ? 20.sp : 22.sp) : 5.sp,
+                fit: BoxFit.contain,
               ),
             ],
           ),

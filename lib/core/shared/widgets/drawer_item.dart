@@ -6,6 +6,8 @@ class DrawerItem extends StatelessWidget{
 
   final String title;
   final ScrollController? scrollController;
+  final GlobalKey? experienceKey;
+  final GlobalKey? skillsKey;
   final GlobalKey? projectsKey;
   final GlobalKey? contactKey;
 
@@ -13,6 +15,8 @@ class DrawerItem extends StatelessWidget{
     super.key,
     required this.title,
     this.scrollController,
+    this.experienceKey,
+    this.skillsKey,
     this.projectsKey,
     this.contactKey,
   });
@@ -54,6 +58,28 @@ class DrawerItem extends StatelessWidget{
                 Future.delayed(const Duration(milliseconds: 300), () {
                   Scrollable.ensureVisible(
                     projectsKey!.currentContext!,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                });
+              }
+              break;
+            case 'skills':
+              if (skillsKey != null) {
+                Future.delayed(const Duration(milliseconds: 300), () {
+                  Scrollable.ensureVisible(
+                    skillsKey!.currentContext!,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                });
+              }
+              break;
+            case 'experience':
+              if (experienceKey != null) {
+                Future.delayed(const Duration(milliseconds: 300), () {
+                  Scrollable.ensureVisible(
+                    experienceKey!.currentContext!,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
                   );

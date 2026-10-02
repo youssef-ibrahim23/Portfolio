@@ -4,12 +4,16 @@ import 'widgets/intro_mobile_view.dart';
 
 class IntroPresenter extends StatelessWidget {
   final ScrollController? scrollController;
+  final GlobalKey? experienceKey;
+  final GlobalKey? skillsKey;
   final GlobalKey? projectsKey;
   final GlobalKey? contactKey;
 
   const IntroPresenter({
     super.key,
     this.scrollController,
+    this.experienceKey,
+    this.skillsKey,
     this.projectsKey,
     this.contactKey,
   });
@@ -21,6 +25,8 @@ class IntroPresenter extends StatelessWidget {
     if (width >= 1024) {
       return IntroDesktopView(
         scrollController: scrollController,
+        experienceKey: experienceKey,
+        skillsKey: skillsKey,
         projectsKey: projectsKey,
         contactKey: contactKey,
       );
@@ -28,6 +34,8 @@ class IntroPresenter extends StatelessWidget {
 
     return IntroMobileView(
       scrollController: scrollController,
+      experienceKey: experienceKey,
+      skillsKey: skillsKey,
       projectsKey: projectsKey,
       contactKey: contactKey,
     );

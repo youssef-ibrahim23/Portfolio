@@ -6,12 +6,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 class IntroMobileView extends StatelessWidget {
   final ScrollController? scrollController;
+  final GlobalKey? experienceKey;
+  final GlobalKey? skillsKey;
   final GlobalKey? projectsKey;
   final GlobalKey? contactKey;
 
   const IntroMobileView({
     super.key,
     this.scrollController,
+    this.experienceKey,
+    this.skillsKey,
     this.projectsKey,
     this.contactKey,
   });
@@ -151,9 +155,9 @@ class IntroMobileView extends StatelessWidget {
                 height: isSmallMobile ? 54.h : 58.h,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (projectsKey != null) {
+                    if (experienceKey != null) {
                       Scrollable.ensureVisible(
-                        projectsKey!.currentContext!,
+                        experienceKey!.currentContext!,
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeInOut,
                       );
@@ -169,7 +173,7 @@ class IntroMobileView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'View My Projects',
+                        'View My Experience',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Manrope',

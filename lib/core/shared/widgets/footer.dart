@@ -68,7 +68,7 @@ class Footer extends StatelessWidget {
           ],
           Center(
             child: Text(
-              '© 2024 Youssef Ibrahim. All rights reserved.',
+              '© 2026 Youssef Ibrahim. All rights reserved.',
               style: TextStyle(
                 color: AppColors.secondaryText,
                 fontFamily: 'Manrope',

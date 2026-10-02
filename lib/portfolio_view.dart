@@ -7,8 +7,10 @@ import 'package:protofolio/core/shared/widgets/grid_background.dart';
 import 'package:protofolio/core/shared/widgets/mobile_appbar.dart';
 import 'package:protofolio/core/shared/widgets/mobile_drawer.dart';
 import 'package:protofolio/features/contact_me/presentation/contact_me_presenter.dart';
+import 'package:protofolio/features/experience/presentation/experience_presenter.dart';
 import 'package:protofolio/features/intro/UI/presentation/intro_presenter.dart';
 import 'package:protofolio/features/projects/presentation/UI/projects_presenter.dart';
+import 'package:protofolio/features/skills/presentation/skills_presenter.dart';
 
 class PortfolioView extends StatefulWidget {
    const PortfolioView({super.key});
@@ -21,6 +23,8 @@ class _PortfolioViewState extends State<PortfolioView> {
   final ScrollController _scrollController = ScrollController();
   
   // GlobalKeys for scroll targeting
+  final GlobalKey _experienceKey = GlobalKey();
+  final GlobalKey _skillsKey = GlobalKey();
   final GlobalKey _projectsKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
 
@@ -50,12 +54,16 @@ class _PortfolioViewState extends State<PortfolioView> {
       appBar: isDesktop
           ? DesktopAppBar(
               scrollController: _scrollController,
+              experienceKey: _experienceKey,
+              skillsKey: _skillsKey,
               projectsKey: _projectsKey,
               contactKey: _contactKey,
             )
           : MobileAppbar(),
       endDrawer: isDesktop ? null : MobileDrawer(
         scrollController: _scrollController,
+        experienceKey: _experienceKey,
+        skillsKey: _skillsKey,
         projectsKey: _projectsKey,
         contactKey: _contactKey,
       ),
@@ -67,10 +75,74 @@ class _PortfolioViewState extends State<PortfolioView> {
             children: [
               IntroPresenter(
                 scrollController: _scrollController,
+                experienceKey: _experienceKey,
+                skillsKey: _skillsKey,
                 projectsKey: _projectsKey,
                 contactKey: _contactKey,
               ),
               SizedBox(height:  70.h,),
+              Padding(
+                key: _experienceKey,
+                padding: EdgeInsets.only(left: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: isSmallMobile ? 60.h : 70.h,
+                      width: 3.w,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryAccent,
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Text(
+                      'Experience',
+                      style: TextStyle(
+                        color: AppColors.primaryText,
+                        fontFamily: 'Manrope',
+                        fontSize: isDesktop ? 10.sp : 22.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const ExperiencePresenter(),
+
+              SizedBox(height: isSmallMobile ? 70.h : 70.h),
+
+              Padding(
+                key: _skillsKey,
+                padding: EdgeInsets.only(left: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: isSmallMobile ? 60.h : 70.h,
+                      width: 3.w,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryAccent,
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Text(
+                      'Skills',
+                      style: TextStyle(
+                        color: AppColors.primaryText,
+                        fontFamily: 'Manrope',
+                        fontSize: isDesktop ? 10.sp : 22.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SkillsPresenter(),
+
+              SizedBox(height: isSmallMobile ? 70.h : 70.h),
+
               Padding(
                 key: _projectsKey,
                 padding: EdgeInsets.only(left: 20.w),
