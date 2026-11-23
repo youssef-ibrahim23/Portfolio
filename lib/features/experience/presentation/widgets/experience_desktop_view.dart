@@ -37,7 +37,7 @@ class ExperienceDesktopView extends StatelessWidget {
             title: 'Flutter Developer',
             company: 'NTG Clarity',
             location: 'Egypt, Giza',
-            period: '09/2026 – Present',
+            period: '09/2025 – Present',
             responsibilities: const [
               'Developed and maintained cross-platform Flutter applications for multiple client projects using Flutter and Dart.',
               'Collaborated with UI/UX, backend, DevOps, and business analysts Teams to design and deliver production features.',

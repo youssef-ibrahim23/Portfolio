@@ -171,7 +171,7 @@ class IntroDesktopView extends StatelessWidget {
                       ),
                       child: MaterialButton(
                         onPressed: () async {
-                          final uri = Uri.parse('https://drive.google.com/file/d/1ub-Ys5X_s0Ie3R0Vtu3fgOG6TiRksIXH/view?usp=sharing');
+                          final uri = Uri.parse('https://drive.google.com/file/d/1b_AsGqJg0lVqzeg6OIYt9z_wKEPFd_BG/view?usp=drivesdk');
                           if (await canLaunchUrl(uri)) {
                             await launchUrl(uri);
                           }
